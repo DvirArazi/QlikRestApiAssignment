@@ -5,7 +5,7 @@
 [V] update
 [V] delete
 [V] list
-[ ] other request types
+[V] other request types
 [ ] modularity
 [ ] cli
 [ ] ci for automated testing

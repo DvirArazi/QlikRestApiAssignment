@@ -12,10 +12,10 @@ namespace QuikRestApiAssignment.Controllers;
 
 [ApiController]
 [Route("")]
-public class PalindromeController : ControllerBase {
+public class MainController : ControllerBase {
     IMongoCollection<MessageRepo> _messages;
 
-    public PalindromeController(List<MessageRepo> messages) {
+    public MainController(List<MessageRepo> messages) {
         var client = new MongoClient("mongodb+srv://Lodea:Dkxr7214!@cluster0.kw4y8.mongodb.net/test");
         var db = client.GetDatabase("PalindromeDB");
         _messages = db.GetCollection<MessageRepo>("Messages");
@@ -70,22 +70,28 @@ public class PalindromeController : ControllerBase {
         return Newtonsoft.Json.JsonConvert.SerializeObject(new {wasFound = dbRes.DeletedCount > 0});;
     }
 
-    [HttpGet("update/{oldText}/{newText}")]
-    public async Task<string> Update(string oldText, string newText) {
-        bool isPalindrome = Utils.IsPalindrome(newText);
-        bool isInDB = await containsMessage(newText);
+    public class UpdateParams {
+        public string? OldText {get; set;}
+        public string? NewText {get; set;}
+    }
+    [HttpPatch("update")]
+    public async Task<ActionResult<string>> Update([FromBody] UpdateParams updateParams) {
+        if (updateParams.OldText == null || updateParams.NewText == null) {
+            return BadRequest();
+        }
+        bool isPalindrome = Utils.IsPalindrome(updateParams.NewText);
+        bool isInDB = await containsMessage(updateParams.NewText);
 
         if (!isInDB) {
             await _messages.UpdateOneAsync(
-                message => message.Text == oldText,
+                message => message.Text == updateParams.OldText,
                 Builders<MessageRepo>.Update
-                    .Set(message => message.Text, newText)
+                    .Set(message => message.Text, updateParams.NewText)
                     .Set(message => message.IsPalindrome, isPalindrome)
             );
         }
 
-        var rtn = (isPalindrome: isPalindrome, isInDB: isInDB);
-        return Newtonsoft.Json.JsonConvert.SerializeObject(new {rtn.isPalindrome, rtn.isInDB});
+        return Newtonsoft.Json.JsonConvert.SerializeObject(new {isPalindrome = isPalindrome, isInDB = isInDB});
     }
 
     [HttpGet("isInDB/{text}")]

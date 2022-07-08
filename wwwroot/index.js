@@ -1,4 +1,4 @@
-import { postReq, deleteReq } from "./utils.js";
+import { postReq, deleteReq, patchReq } from "./utils.js";
 
 var submit = document.getElementById("submit");
 var table = document.getElementById("table");
@@ -33,9 +33,9 @@ var addRow = (text, isPalindrome) => {
     var cell2 = row.insertCell();
     cell2.appendChild(deleteBtn);
 
-    var onTextboxInput = async () => {
+    var onTextboxUpdate = async () => {
         if (text != textbox.value) {
-            var res = await (await fetch(`update/${text}/${textbox.value}`)).json();
+            var res = await patchReq("update", {OldText: text, NewText: textbox.value});
             if (!res.isInDB) {
                 text = textbox.value;
                 cell1.innerHTML = res.isPalindrome;
@@ -48,11 +48,11 @@ var addRow = (text, isPalindrome) => {
     }
     textbox.onkeydown = (e) => {
         if (e.key == "Enter") {
-            onTextboxInput();
+            onTextboxUpdate();
         }
     };
     textbox.onblur = ()=>{
-        onTextboxInput();
+        onTextboxUpdate();
     };
 }
 
