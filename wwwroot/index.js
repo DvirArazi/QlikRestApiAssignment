@@ -1,20 +1,9 @@
+import { postReq, deleteReq } from "./utils.js";
 
 var submit = document.getElementById("submit");
 var table = document.getElementById("table");
-var text = document.getElementById("text");
+var textbox = document.getElementById("textbox");
 var notice = document.getElementById("notice");
-
-//POST request
-//============
-var post = async (url, data) => {
-    return await (await fetch(url, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        }, 
-        body: JSON.stringify(data)
-    })).json();
-}
 
 //Add Row
 //=======
@@ -34,8 +23,11 @@ var addRow = (text, isPalindrome) => {
     var deleteBtn = document.createElement("button");
     deleteBtn.innerHTML = "Delete";
     deleteBtn.onclick = async () => {
-        await fetch(`delete/${text}`);
-        row.remove();
+        var res = await deleteReq("delete", { Text: text });
+        console.log(res);
+        if (res.wasFound) {
+            row.remove();
+        }
     };
 
     var cell2 = row.insertCell();
@@ -75,16 +67,16 @@ var addRow = (text, isPalindrome) => {
     //Add row after input of the top text input
     //=========================================
     var onTextInput = async () => {
-        var res = await post("add", {Text: text.value});
+        var res = await postReq("add", {Text: textbox.value});
         console.log(res);
         if (!res.isInDB) {
-            addRow(text.value, res.isPalindrome);
+            addRow(textbox.value, res.isPalindrome);
             notice.innerText = "";
         } else {
             notice.innerText = "The message is already in the database.";
         }
     }
-    text.onkeydown = (e) => {
+    textbox.onkeydown = (e) => {
         if (e.key == "Enter") {
             onTextInput();
         }

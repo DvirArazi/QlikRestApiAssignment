@@ -55,15 +55,19 @@ public class PalindromeController : ControllerBase {
             await _messages.InsertOneAsync(new MessageRepo(addParams.Text, isPalindrome));
         }
 
-        var rtn = (isPalindrome: isPalindrome, isInDB: isInDB);
-        return Newtonsoft.Json.JsonConvert.SerializeObject(new {rtn.isPalindrome, rtn.isInDB});
+        return Newtonsoft.Json.JsonConvert.SerializeObject(new {isPalindrome = isPalindrome, isInDB = isInDB});
     }
 
-    [HttpGet("delete/{text}")]
-    public async Task<string> Delete(string text) {
-        var result = await _messages.DeleteOneAsync(message => message.Text == text);
+    public class DeleteParams { public string? Text {get; set;} }
+    [HttpDelete("delete")]
+    public async Task<ActionResult<string>> Delete([FromBody] DeleteParams deleteParams) {
+        if (deleteParams.Text == null) {
+            return BadRequest();
+        }
+        
+        var dbRes = await _messages.DeleteOneAsync(message => message.Text == deleteParams.Text);
 
-        return result.DeletedCount > 0 ? "Message was deleted." : "Message does not exist in the database.";
+        return Newtonsoft.Json.JsonConvert.SerializeObject(new {wasFound = dbRes.DeletedCount > 0});;
     }
 
     [HttpGet("update/{oldText}/{newText}")]

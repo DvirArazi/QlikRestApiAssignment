@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Re5822UbqzW2/aVUFDiBnaJMXhFqLbOnr7ZtNtgzeRc=",
+  "Hash": "KNr2QVgjAloSab2anQpWAtSfJNiYdTuUgmot4SNaGMU=",
   "Source": "QuikRestApiAssignment",
   "BasePath": "_content/QuikRestApiAssignment",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.js"
+    },
+    {
+      "Identity": "D:\\VS Code Projects\\QuikRestApiAssignment\\wwwroot\\utils.js",
+      "SourceId": "QuikRestApiAssignment",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\VS Code Projects\\QuikRestApiAssignment\\wwwroot\\",
+      "BasePath": "_content/QuikRestApiAssignment",
+      "RelativePath": "utils.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\utils.js"
     }
   ]
 }
