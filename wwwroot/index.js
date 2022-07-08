@@ -4,6 +4,20 @@ var table = document.getElementById("table");
 var text = document.getElementById("text");
 var notice = document.getElementById("notice");
 
+//POST request
+//============
+var post = async (url, data) => {
+    return await (await fetch(url, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        }, 
+        body: JSON.stringify(data)
+    })).json();
+}
+
+//Add Row
+//=======
 var addRow = (text, isPalindrome) => {
     var row = table.insertRow();
 
@@ -50,12 +64,19 @@ var addRow = (text, isPalindrome) => {
     };
 }
 
+//Build Table
+//===========
 (async () => {
+    //Get All Messages from DB
+    //========================
     var messages = await (await fetch("all")).json();
     console.log(messages);
 
+    //Add row after input of the top text input
+    //=========================================
     var onTextInput = async () => {
-        var res = await (await fetch(`add/${text.value}`)).json();
+        var res = await post("add", {Text: text.value});
+        console.log(res);
         if (!res.isInDB) {
             addRow(text.value, res.isPalindrome);
             notice.innerText = "";
@@ -72,6 +93,8 @@ var addRow = (text, isPalindrome) => {
         onTextInput();
     };
 
+    //Add row for each message
+    //========================
     messages.forEach((message) => {
         addRow(message.Text, message.IsPalindrome)
     });

@@ -41,13 +41,18 @@ public class PalindromeController : ControllerBase {
         return Newtonsoft.Json.JsonConvert.SerializeObject(_messages.Find(_=>true).ToList());
     }
 
-    [HttpGet("add/{text}")]
-    public async Task<string> Add(string text){
-        bool isPalindrome = IsPalindrome(text);
-        bool isInDB = await containsMessage(text);
+    public class AddParams { public string? Text {get; set;} }
+    [HttpPost("add")]
+    public async Task<ActionResult<string>> Add([FromBody] AddParams addParams) {
+        if (addParams.Text == null) {
+            return BadRequest();
+        }
+        
+        bool isPalindrome = Utils.IsPalindrome(addParams.Text);
+        bool isInDB = await containsMessage(addParams.Text);
 
         if (!isInDB) {
-            await _messages.InsertOneAsync(new MessageRepo(text, isPalindrome));
+            await _messages.InsertOneAsync(new MessageRepo(addParams.Text, isPalindrome));
         }
 
         var rtn = (isPalindrome: isPalindrome, isInDB: isInDB);
@@ -63,7 +68,7 @@ public class PalindromeController : ControllerBase {
 
     [HttpGet("update/{oldText}/{newText}")]
     public async Task<string> Update(string oldText, string newText) {
-        bool isPalindrome = IsPalindrome(newText);
+        bool isPalindrome = Utils.IsPalindrome(newText);
         bool isInDB = await containsMessage(newText);
 
         if (!isInDB) {
@@ -79,17 +84,8 @@ public class PalindromeController : ControllerBase {
         return Newtonsoft.Json.JsonConvert.SerializeObject(new {rtn.isPalindrome, rtn.isInDB});
     }
 
+    [HttpGet("isInDB/{text}")]
     async Task<bool> containsMessage(string text) {
         return await _messages.Find(message => message.Text == text).AnyAsync();
-    }
-
-    public bool IsPalindrome(string text) {
-        for (int i = 0; i < text.Length / 2; i++) {
-            if (text[i] != text[text.Length - 1 - i]) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }
