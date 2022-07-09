@@ -8,13 +8,21 @@ public class MessageRepo {
     [BsonRepresentation(BsonType.ObjectId)]
     public string Id {get; set;}
     
-    public string Text;
-    public bool IsPalindrome;
+    string _text;
+    public TextTraits Traits {get; private set;}
 
-    public MessageRepo(string text, bool isPalindrome) {
+    public MessageRepo(string text) {
         Id = "";
         
-        Text = text;
-        IsPalindrome = isPalindrome;
+        _text = text;
+        Traits = new TextTraits(text);
+    }
+
+    public string Text {
+        get => _text;
+        set {
+            _text = value;
+            Traits = new TextTraits(value);
+        }
     }
 }

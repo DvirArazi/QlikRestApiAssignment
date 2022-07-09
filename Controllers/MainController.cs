@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Net.WebSockets;
 // using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
@@ -21,6 +22,7 @@ public class MainController : ControllerBase {
         _messages = db.GetCollection<MessageRepo>("Messages");
     }
 
+
     [HttpGet]
     public ContentResult Home() {
         return base.Content(
@@ -29,17 +31,18 @@ public class MainController : ControllerBase {
         );
     }
 
+
     [HttpGet("all")]
     public string All() {
+        //TRY to fix later
         var blues = _messages.Find(_=>true).ToList().Select((message, _) => message.ToJson()).ToList();
-        foreach (var blue in blues) {
-            Console.WriteLine(blue);
-        }
-        Console.WriteLine(blues.ToJson());
-        Console.WriteLine(_messages.Find(_=>true).First());
 
-        return Newtonsoft.Json.JsonConvert.SerializeObject(_messages.Find(_=>true).ToList());
+        return Newtonsoft.Json.JsonConvert.SerializeObject(new {
+            titles = new string[] {"Is Palindrome", "Letter Count", "Ordered"}, 
+            messages = _messages.Find(_=>true).ToList()
+        });
     }
+
 
     public class AddParams { public string? Text {get; set;} }
     [HttpPost("add")]
@@ -48,15 +51,17 @@ public class MainController : ControllerBase {
             return BadRequest();
         }
         
-        bool isPalindrome = Utils.IsPalindrome(addParams.Text);
-        bool isInDB = await containsMessage(addParams.Text);
+        MessageRepo? message = await getMessageByText(addParams.Text);
 
-        if (!isInDB) {
-            await _messages.InsertOneAsync(new MessageRepo(addParams.Text, isPalindrome));
+        if (message == null) {
+            var newMessage = new MessageRepo(addParams.Text);
+            await _messages.InsertOneAsync(newMessage);
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new {traits = newMessage.Traits, isInDB = false});
+        } else {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new {traits = message.Traits, isInDB = true});
         }
-
-        return Newtonsoft.Json.JsonConvert.SerializeObject(new {isPalindrome = isPalindrome, isInDB = isInDB});
     }
+
 
     public class DeleteParams { public string? Text {get; set;} }
     [HttpDelete("delete")]
@@ -70,6 +75,7 @@ public class MainController : ControllerBase {
         return Newtonsoft.Json.JsonConvert.SerializeObject(new {wasFound = dbRes.DeletedCount > 0});;
     }
 
+
     public class UpdateParams {
         public string? OldText {get; set;}
         public string? NewText {get; set;}
@@ -79,23 +85,33 @@ public class MainController : ControllerBase {
         if (updateParams.OldText == null || updateParams.NewText == null) {
             return BadRequest();
         }
-        bool isPalindrome = Utils.IsPalindrome(updateParams.NewText);
-        bool isInDB = await containsMessage(updateParams.NewText);
 
-        if (!isInDB) {
+        MessageRepo? message = await getMessageByText(updateParams.NewText);
+
+        if (message == null) {
+            var newTraits = new TextTraits(updateParams.NewText);
+
             await _messages.UpdateOneAsync(
                 message => message.Text == updateParams.OldText,
                 Builders<MessageRepo>.Update
                     .Set(message => message.Text, updateParams.NewText)
-                    .Set(message => message.IsPalindrome, isPalindrome)
+                    .Set(message => message.Traits, newTraits)
             );
-        }
 
-        return Newtonsoft.Json.JsonConvert.SerializeObject(new {isPalindrome = isPalindrome, isInDB = isInDB});
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new {traits = newTraits, isInDB = false});
+        } else {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new {traits = message.Traits, isInDB = true});
+        }
     }
 
-    [HttpGet("isInDB/{text}")]
-    async Task<bool> containsMessage(string text) {
-        return await _messages.Find(message => message.Text == text).AnyAsync();
+
+    [ApiExplorerSettings(IgnoreApi = true)]
+    async Task<MessageRepo?> getMessageByText(string text) {
+        var find = _messages.Find(message => message.Text == text);
+        if (find.CountDocuments() > 0) {
+            return await find.FirstAsync();
+        } else {
+            return null;
+        }
     }
 }

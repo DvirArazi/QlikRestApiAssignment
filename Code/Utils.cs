@@ -8,4 +8,25 @@ static class Utils {
 
         return true;
     }
+
+    public static int CharCount(string text) {
+        return text.Length;
+    }
+
+    public static string Organize(string text) {
+        string rtn = "";
+
+        for (char c = (char)0; c < 'Z'-'A'; c++) {
+            void inner(char index) {
+                for (int i = 0; i < text.Count((val)=>val==index); i++) {
+                    rtn += index;
+                }
+            }
+
+            inner((char)('A' + c));
+            inner((char)('a' + c));
+        }
+
+        return rtn;
+    }
 }

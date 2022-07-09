@@ -7,7 +7,7 @@ var notice = document.getElementById("notice");
 
 //Add Row
 //=======
-var addRow = (text, isPalindrome) => {
+var addRow = (text, traits) => {
     var row = table.insertRow();
 
     var textbox = document.createElement("input");
@@ -17,8 +17,13 @@ var addRow = (text, isPalindrome) => {
     var cell0 = row.insertCell();
     cell0.appendChild(textbox);
 
-    var cell1 = row.insertCell();
-    cell1.innerHTML = isPalindrome;
+    console.log(traits);
+
+    var traitCellList = {};
+    for (const [key, value] of Object.entries(traits)) {
+        traitCellList[key] = row.insertCell();
+        traitCellList[key].innerHTML = value;
+    }
 
     var deleteBtn = document.createElement("button");
     deleteBtn.innerHTML = "Delete";
@@ -38,7 +43,9 @@ var addRow = (text, isPalindrome) => {
             var res = await patchReq("update", {OldText: text, NewText: textbox.value});
             if (!res.isInDB) {
                 text = textbox.value;
-                cell1.innerHTML = res.isPalindrome;
+                for (const [key, value] of Object.entries(res.traits)) {
+                    traitCellList[key].innerHTML = value;
+                }
                 notice.innerText = "";
             } else {
                 textbox.value = text;
@@ -61,16 +68,26 @@ var addRow = (text, isPalindrome) => {
 (async () => {
     //Get All Messages from DB
     //========================
-    var messages = await (await fetch("all")).json();
-    console.log(messages);
+    var allRes = await (await fetch("all")).json();
+    console.log(allRes);
+
+    var row = table.insertRow();
+    ["words"].concat(allRes.titles).forEach((title)=>{
+        var tempCell = row.insertCell();
+        tempCell.style = `
+            text-align: center;
+            padding: 5px;
+        `;
+        tempCell.innerHTML = `<b> ${title} </b>`;
+    });
 
     //Add row after input of the top text input
     //=========================================
     var onTextInput = async () => {
-        var res = await postReq("add", {Text: textbox.value});
-        console.log(res);
-        if (!res.isInDB) {
-            addRow(textbox.value, res.isPalindrome);
+        var addRes = await postReq("add", {Text: textbox.value});
+        console.log(addRes);
+        if (!addRes.isInDB) {
+            addRow(textbox.value, addRes.traits);
             notice.innerText = "";
         } else {
             notice.innerText = "The message is already in the database.";
@@ -87,7 +104,7 @@ var addRow = (text, isPalindrome) => {
 
     //Add row for each message
     //========================
-    messages.forEach((message) => {
-        addRow(message.Text, message.IsPalindrome)
+    allRes.messages.forEach((message) => {
+        addRow(message.Text, message.Traits)
     });
 })();
