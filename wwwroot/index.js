@@ -41,7 +41,7 @@ var addRow = (text, traits) => {
     var onTextboxUpdate = async () => {
         if (text != textbox.value) {
             var res = await patchReq("update", {OldText: text, NewText: textbox.value});
-            if (!res.isInDB) {
+            if (!res.isNewInDB) {
                 text = textbox.value;
                 for (const [key, value] of Object.entries(res.traits)) {
                     traitCellList[key].innerHTML = value;

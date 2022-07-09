@@ -34,9 +34,6 @@ public class MainController : ControllerBase {
 
     [HttpGet("all")]
     public string All() {
-        //TRY to fix later
-        var blues = _messages.Find(_=>true).ToList().Select((message, _) => message.ToJson()).ToList();
-
         return Newtonsoft.Json.JsonConvert.SerializeObject(new {
             titles = new string[] {"Is Palindrome", "Letter Count", "Ordered"}, 
             messages = _messages.Find(_=>true).ToList()
@@ -86,9 +83,15 @@ public class MainController : ControllerBase {
             return BadRequest();
         }
 
-        MessageRepo? message = await getMessageByText(updateParams.NewText);
+        MessageRepo? message = await getMessageByText(updateParams.OldText);
 
         if (message == null) {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new {traits = new {}, isInDB = false, isNewInDB = new {}});
+        }
+
+        MessageRepo? newMessage = await getMessageByText(updateParams.NewText);
+
+        if (newMessage == null) {
             var newTraits = new TextTraits(updateParams.NewText);
 
             await _messages.UpdateOneAsync(
@@ -98,9 +101,9 @@ public class MainController : ControllerBase {
                     .Set(message => message.Traits, newTraits)
             );
 
-            return Newtonsoft.Json.JsonConvert.SerializeObject(new {traits = newTraits, isInDB = false});
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new {traits = newTraits, isInDB = true, isNewInDB = false});
         } else {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(new {traits = message.Traits, isInDB = true});
+            return Newtonsoft.Json.JsonConvert.SerializeObject(new {traits = newMessage.Traits, isInDB = true, isNewInDB = true});
         }
     }
 

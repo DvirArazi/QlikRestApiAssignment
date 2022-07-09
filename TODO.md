@@ -7,7 +7,7 @@
 [V] list
 [V] other request types
 [V] modularity
-[ ] cli
+[V] cli
 [ ] ci for automated testing
 [ ] testing
 [ ] docker
