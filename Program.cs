@@ -36,4 +36,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run("https://*:"+Environment.GetEnvironmentVariable("$PORT"));
+app.Run("http://*:"+Environment.GetEnvironmentVariable("$PORT"));
