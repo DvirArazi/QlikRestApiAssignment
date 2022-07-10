@@ -36,5 +36,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+foreach (DictionaryEntry environmentVariable in Environment.GetEnvironmentVariables())
+    Console.WriteLine(environmentVariable.Key+ " , "+environmentVariable.Value);
+
 app.Urls.Add("http://*:"+Environment.GetEnvironmentVariable("PORT"));
 app.Run();
