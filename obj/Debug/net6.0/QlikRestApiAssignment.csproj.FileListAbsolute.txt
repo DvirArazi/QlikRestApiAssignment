@@ -43,3 +43,4 @@ D:\VS Code Projects\QlikRestApiAssignment\obj\Debug\net6.0\refint\QlikRestApiAss
 D:\VS Code Projects\QlikRestApiAssignment\obj\Debug\net6.0\QlikRestApiAssignment.pdb
 D:\VS Code Projects\QlikRestApiAssignment\obj\Debug\net6.0\QlikRestApiAssignment.genruntimeconfig.cache
 D:\VS Code Projects\QlikRestApiAssignment\obj\Debug\net6.0\ref\QlikRestApiAssignment.dll
+D:\VS Code Projects\QlikRestApiAssignment\bin\Debug\net6.0\Microsoft.Owin.dll

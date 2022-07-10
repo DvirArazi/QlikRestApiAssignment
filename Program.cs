@@ -1,4 +1,8 @@
 using MongoDB.Driver;
+using System;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +20,7 @@ builder.Services.AddSingleton((_) => new MongoClient("mongodb+srv://Lodea:<passw
 
 var app = builder.Build();
 
-Console.WriteLine("PORT: "+System.Environment.GetEnvironmentVariable("PORT"));
+var port = System.Environment.GetEnvironmentVariable("PORT");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -32,4 +36,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.Run("https://*:"+Environment.GetEnvironmentVariable("PORT"));
