@@ -11,7 +11,7 @@ public class MessagesController : ControllerBase {
     IMongoCollection<Message> _messages;
 
     public MessagesController(List<Message> messages) {
-        var client = new MongoClient("mongodb+srv://Lodea:Dkxr7214!@cluster0.kw4y8.mongodb.net/test");
+        var client = new MongoClient("mongodb+srv://Lodea:1234@cluster0.kw4y8.mongodb.net/test");
         var db = client.GetDatabase("PalindromeDB");
         _messages = db.GetCollection<Message>("Messages");
     }
