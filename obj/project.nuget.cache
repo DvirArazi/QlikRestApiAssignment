@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GFY8ry65EW7/YmNQ0hmdZoCdQRIlod4KT5zExOTqmXlEFWzLPqhfXQNbuv2bGGpiKYbgfPU93u9Pf3b2jYS9/A==",
+  "dgSpecHash": "jqzpfMIHm4pIR09hJA8p/aZDXKwjyBPXSlbxWKMGk8avXfhmSLOP1xPQACE5bo1MShN2JaIYB8Ejm6Puo+njFw==",
   "success": true,
-  "projectFilePath": "D:\\VS Code Projects\\QuikRestApiAssignment\\QuikRestApiAssignment.csproj",
+  "projectFilePath": "D:\\VS Code Projects\\QlikRestApiAssignment\\QlikRestApiAssignment.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dvir4\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\dvir4\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",

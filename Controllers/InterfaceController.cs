@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace QuikRestApiAssignment.Controllers;
 
 [ApiController]
-[Route("interface")]
+[Route("")]
 public class InterfaceController : ControllerBase {
     [HttpGet]
     public ContentResult Home() {

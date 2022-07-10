@@ -16,5 +16,5 @@
 [ ] readme
 [ ] diagram describing the architecture
 
-[ ] Titles by keys
-[ ] not only primitive traits
+[V] Titles by keys
+[X] not only primitive traits
