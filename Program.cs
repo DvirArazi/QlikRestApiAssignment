@@ -20,11 +20,11 @@ var app = builder.Build();
 var port = System.Environment.GetEnvironmentVariable("PORT");
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+// }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
