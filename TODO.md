@@ -10,8 +10,8 @@
 [V] cli
 [ ] ci for automated testing
 [ ] testing
-[ ] docker
-[ ] railway
+[V] docker
+[ ] heroku
 [ ] documentation
 [ ] readme
 [ ] diagram describing the architecture

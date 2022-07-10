@@ -16,6 +16,14 @@ builder.Services.AddSingleton((_) => new MongoClient("mongodb+srv://Lodea:<passw
 
 var app = builder.Build();
 
+new WebHostBuilder()
+    .UseKestrel()
+    .UseContentRoot(Directory.GetCurrentDirectory())
+    .UseIISIntegration()
+    .UseUrls($"http://localhost:{System.Environment.GetEnvironmentVariable(variable: "PORT")}/")
+    .Build()
+    .Run();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
