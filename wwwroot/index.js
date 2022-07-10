@@ -1,4 +1,4 @@
-import { postReq, deleteReq, patchReq } from "./utils.js";
+import { getReq, postReq, deleteReq, patchReq, spaceBetween } from "./utils.js";
 
 var submit = document.getElementById("submit");
 var table = document.getElementById("table");
@@ -7,7 +7,7 @@ var notice = document.getElementById("notice");
 
 //Add Row
 //=======
-var addRow = (text, traits) => {
+var addRow = (text, message) => {
     var row = table.insertRow();
 
     var textbox = document.createElement("input");
@@ -17,10 +17,8 @@ var addRow = (text, traits) => {
     var cell0 = row.insertCell();
     cell0.appendChild(textbox);
 
-    console.log(traits);
-
     var traitCellList = {};
-    for (const [key, value] of Object.entries(traits)) {
+    for (const [key, value] of Object.entries(message.Traits)) {
         traitCellList[key] = row.insertCell();
         traitCellList[key].innerHTML = value;
     }
@@ -28,9 +26,9 @@ var addRow = (text, traits) => {
     var deleteBtn = document.createElement("button");
     deleteBtn.innerHTML = "Delete";
     deleteBtn.onclick = async () => {
-        var res = await deleteReq("delete", { Text: text });
-        console.log(res);
-        if (res.wasFound) {
+        console.log(message.Id);
+        var res = await deleteReq(`messages/${message.Id}`);
+        if (res.status == 200) {
             row.remove();
         }
     };
@@ -40,10 +38,10 @@ var addRow = (text, traits) => {
 
     var onTextboxUpdate = async () => {
         if (text != textbox.value) {
-            var res = await patchReq("update", {OldText: text, NewText: textbox.value});
-            if (!res.isNewInDB) {
+            var res = await patchReq(`messages/${message.Id}`, {OldText: text, NewText: textbox.value});
+            if (res.status == 200) {
                 text = textbox.value;
-                for (const [key, value] of Object.entries(res.traits)) {
+                for (const [key, value] of Object.entries(res.json.Traits)) {
                     traitCellList[key].innerHTML = value;
                 }
                 notice.innerText = "";
@@ -66,28 +64,32 @@ var addRow = (text, traits) => {
 //Build Table
 //===========
 (async () => {
+    // var bla = await getReq("messages/62c8b686b04bffceb5b1e0de");
+    // console.log(bla);
+    // bla = await deleteReq("messages/62c8b686b04bffceb5b1e0de");
+
     //Get All Messages from DB
     //========================
-    var allRes = await (await fetch("all")).json();
-    console.log(allRes);
+    var allRes = await getReq("messages", {});
 
-    var row = table.insertRow();
-    ["words"].concat(allRes.titles).forEach((title)=>{
-        var tempCell = row.insertCell();
-        tempCell.style = `
-            text-align: center;
-            padding: 5px;
-        `;
-        tempCell.innerHTML = `<b> ${title} </b>`;
-    });
+    if (allRes.json.length > 0) {
+        var row = table.insertRow();
+        ["words"].concat(Object.keys(allRes.json[0].Traits)).forEach((title)=>{
+            var tempCell = row.insertCell();
+            tempCell.style = `
+                text-align: center;
+                padding: 5px;
+            `;
+            tempCell.innerHTML = `<b>${spaceBetween(title)}</b>`;
+        });
+    }
 
     //Add row after input of the top text input
     //=========================================
     var onTextInput = async () => {
-        var addRes = await postReq("add", {Text: textbox.value});
-        console.log(addRes);
-        if (!addRes.isInDB) {
-            addRow(textbox.value, addRes.traits);
+        var addRes = await postReq("messages", {Text: textbox.value});
+        if (addRes.status == 200) {
+            addRow(textbox.value, addRes.json);
             notice.innerText = "";
         } else {
             notice.innerText = "The message is already in the database.";
@@ -104,7 +106,7 @@ var addRow = (text, traits) => {
 
     //Add row for each message
     //========================
-    allRes.messages.forEach((message) => {
-        addRow(message.Text, message.Traits)
+    allRes.json.forEach((message) => {
+        addRow(message.Text, message)
     });
 })();
