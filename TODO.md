@@ -8,10 +8,10 @@
 [V] other request types
 [V] modularity
 [V] cli
-[ ] ci for automated testing
-[ ] testing
+[B] ci for automated testing
+[B] testing
 [V] docker
-[ ] heroku
+[V] heroku
 [ ] documentation
 [ ] readme
 [ ] diagram describing the architecture

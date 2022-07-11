@@ -12,8 +12,11 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMemoryCache();
 
-builder.Services.AddSingleton(new List<Message>());
-builder.Services.AddSingleton((_) => new MongoClient("mongodb+srv://Lodea:<password>@cluster0.kw4y8.mongodb.net/test"));
+var client = new MongoClient("mongodb+srv://Lodea:1234@cluster0.kw4y8.mongodb.net/test");
+var db = client.GetDatabase("PalindromeDB");
+var messages = db.GetCollection<Message>("Messages");
+
+builder.Services.AddSingleton(messages);
 
 var app = builder.Build();
 
