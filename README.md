@@ -26,7 +26,8 @@ public class TextTraits {
 To run the app on your own machine first clone the repository,
 then open the `Program.cs` file and replace the line
 `app.Urls.Add("http://*:"+Environment.GetEnvironmentVariable("PORT"));`
-with `app.Urls.Add("http://*:<port>");` with `<port>` being a port of your choosing.<br />
+with `app.Urls.Add("http://*:<port>");` with `<port>` being a port of your choosing.
+Alternatively you can instead make an environment variable named "PORT" with the value of your prefered port.<br />
 Then simply go to the project's root directory and execute `dotnet run`.<br />
 The server will run on your machine and you may access the web interface by going to `http://localhost:<port>`.
 
@@ -38,7 +39,8 @@ You could clone and use the CLI application from the repository [here](https://g
 | Action                             | Method | Endpoint                                | Parameters                      |
 |------------------------------------|--------|-----------------------------------------|---------------------------------|
 | Retrieve all messages              | GET    | api/messages                            |                                 |
-| Retrieve a single message          | GET    | api/messages/{id}                       |                                 |
-| Create message                     | POST   | api/messages                            | text                            |
+| Retrieve a single message          | GET    | api/messages/{id}                       |                                 | 
+| Create message                     | POST   | api/messages                            | text                            | 
 | Delete message                     | DELETE | api/messages/{id}                       |                                 |
 | Update message                     | PATCH  | api/messages/{id}                       | newText                         |
+
