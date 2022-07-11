@@ -7,7 +7,7 @@ The app was contained using Docker and deployed on Heroku at https://qlik-assign
 # Architecture
 ![alt text](https://imgur.com/JubDLrN.png)
 
-The REST API was made in a modular fashion, allowing adding new traits to be stored and displayed by simply adding new properties to the TextTraits class and assigning them a value that fits their logic:
+The REST API was made in a modular fashion, allowing the addition of new traits to be stored and displayed by simply adding new properties to the TextTraits class and assigning them a value that fits their logic:
 ```C#
 public class TextTraits {
     public bool IsPalindrome {get;}
