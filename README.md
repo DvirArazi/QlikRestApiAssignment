@@ -5,7 +5,7 @@ The API is made with C# .Net6.0 with the ASP.NET Framework, it stores and retrie
 The app was contained using Docker and deployed on Heroku at https://qlik-assignment.herokuapp.com/.
 
 # Architecture
-![diagram](https://i.imgur.com/XHppfkw.png) 
+![diagram](https://imgur.com/BB4crCe.png) 
 
 The REST API was made in a modular fashion, allowing the addition of new traits to be stored and displayed by simply adding new properties to the TextTraits class and assigning them a value that fits their logic:
 ```C#
