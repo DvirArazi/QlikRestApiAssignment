@@ -7,11 +7,13 @@ D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\QlikRestApi
 D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\QlikRestApiAssignment.pdb
 D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\DnsClient.dll
 D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\Microsoft.OpenApi.dll
+D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\Microsoft.Owin.dll
 D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\MongoDB.Bson.dll
 D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\MongoDB.Driver.dll
 D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\MongoDB.Driver.Core.dll
 D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\MongoDB.Libmongocrypt.dll
 D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\Newtonsoft.Json.dll
+D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\Owin.dll
 D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\SharpCompress.dll
 D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\Swashbuckle.AspNetCore.Swagger.dll
 D:\VS Code Projects\QlikRestApiAssignment\bin\release\net6.0\publish\Swashbuckle.AspNetCore.SwaggerGen.dll

@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "Hash": "t225bL7V/WQohRfGfkSbmwGVUsvGNR96TLM7759NFl8=",
+  "Source": "QlikRestApiAssignment",
+  "BasePath": "_content/QlikRestApiAssignment",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "QlikRestApiAssignment\\wwwroot",
+      "Source": "QlikRestApiAssignment",
+      "ContentRoot": "D:\\VS Code Projects\\QlikRestApiAssignment\\wwwroot\\",
+      "BasePath": "_content/QlikRestApiAssignment",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\VS Code Projects\\QlikRestApiAssignment\\wwwroot\\index.html",
+      "SourceId": "QlikRestApiAssignment",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\VS Code Projects\\QlikRestApiAssignment\\wwwroot\\",
+      "BasePath": "_content/QlikRestApiAssignment",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "D:\\VS Code Projects\\QlikRestApiAssignment\\wwwroot\\index.js",
+      "SourceId": "QlikRestApiAssignment",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\VS Code Projects\\QlikRestApiAssignment\\wwwroot\\",
+      "BasePath": "_content/QlikRestApiAssignment",
+      "RelativePath": "index.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.js"
+    },
+    {
+      "Identity": "D:\\VS Code Projects\\QlikRestApiAssignment\\wwwroot\\utils.js",
+      "SourceId": "QlikRestApiAssignment",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\VS Code Projects\\QlikRestApiAssignment\\wwwroot\\",
+      "BasePath": "_content/QlikRestApiAssignment",
+      "RelativePath": "utils.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\utils.js"
+    }
+  ]
+}
