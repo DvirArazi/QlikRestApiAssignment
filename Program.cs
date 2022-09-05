@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddMemoryCache();
 
-var client = new MongoClient("mongodb+srv://Lodea:1234@cluster0.kw4y8.mongodb.net/test");
+var client = new MongoClient("mongodb+srv://Lodea:13kSViP92Pu0DQbQ@cluster0.kw4y8.mongodb.net/test");
 var db = client.GetDatabase("PalindromeDB");
 var messages = db.GetCollection<Message>("Messages");
 
